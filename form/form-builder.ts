@@ -4,6 +4,7 @@ import {
   SectionFormControl,
   SelectDateFormControl,
 } from '../form-controls';
+import { FormSubmitObserver, Observer } from '../observer';
 import { Form } from './form';
 
 /**
@@ -24,6 +25,11 @@ export class FormBuilder {
 
   addControls(controls: FormControl[]): FormBuilder {
     controls.forEach((control) => this._form.addControl(control));
+    return this;
+  }
+
+  setObserver(observer: Observer): FormBuilder {
+    this._form.subscribe(observer);
     return this;
   }
 
@@ -63,6 +69,9 @@ export class FormBuilderDirector {
 
     this._builder.addControls([section, selectDate1, selectDate2]);
 
-    return this._builder.setTitle('Example Form Template').build();
+    return this._builder
+      .setTitle('Example Form Template')
+      .setObserver(new FormSubmitObserver())
+      .build();
   }
 }

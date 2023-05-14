@@ -1,4 +1,5 @@
 import { FormControl } from '../form-controls';
+import { Observer } from '../observer';
 import { FormMemento } from './form-memento';
 
 /**
@@ -13,6 +14,7 @@ import { FormMemento } from './form-memento';
 export class Form {
   private _title = '';
   private _controls: FormControl[] = [];
+  private _observers: Observer[] = [];
 
   setTitle(title: string): void {
     this._title = title;
@@ -34,7 +36,27 @@ export class Form {
     return new FormMemento(clonedControls);
   }
 
+  submit(): void {
+    if (!this.isFormCompleted()) return;
+    
+    console.log('Form submited');
+    console.log(this._observers);
+    this.notifyAll();
+  }
+
   restoreState(memento: FormMemento): void {
     this._controls = memento.controls;
+  }
+
+  subscribe(observer: Observer): void {
+    this._observers.push(observer);
+  }
+
+  unsubscribe(observer: Observer): void {
+    this._observers = this._observers.filter((obs) => obs !== observer);
+  }
+
+  notifyAll(): void {
+    this._observers.forEach((obs) => obs.submit(this));
   }
 }

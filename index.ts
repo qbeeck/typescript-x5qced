@@ -12,5 +12,5 @@ environment.setEnvironment(developEnv);
 const formBuilder = new FormBuilder();
 const formBuilderDirector = new FormBuilderDirector();
 
-const test = formBuilderDirector.exampleForm();
+const test = formBuilderDirector.exampleForm().submit();
 console.log(test);
