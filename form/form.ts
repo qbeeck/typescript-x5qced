@@ -16,6 +16,10 @@ export class Form {
   private _controls: FormControl[] = [];
   private _observers: Observer[] = [];
 
+  get controls() {
+    return this._controls;
+  }
+
   setTitle(title: string): void {
     this._title = title;
   }
@@ -38,7 +42,7 @@ export class Form {
 
   submit(): void {
     if (!this.isFormCompleted()) return;
-    
+
     console.log('Form submited');
     console.log(this._observers);
     this.notifyAll();

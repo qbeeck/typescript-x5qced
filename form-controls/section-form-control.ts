@@ -8,6 +8,10 @@ export class SectionFormControl extends FormControl {
     super('section');
   }
 
+  get controls() {
+    return this._controls;
+  }
+
   setTitle(title: string): SectionFormControl {
     this._title = title;
 

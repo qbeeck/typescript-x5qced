@@ -6,6 +6,8 @@ export abstract class FormControl {
   }
 
   abstract isAnswered(): boolean;
+  abstract answer(value: string): void;
+  abstract answer(value: Date): void;
 
   get type(): string {
     return this._type;
