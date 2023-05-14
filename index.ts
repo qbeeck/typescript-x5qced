@@ -1,6 +1,16 @@
-import { FormBuilderDirector } from './form';
+import { DevelopEnvironment, Environment, ProductionEnvironment } from './core';
+import { FormBuilder, FormBuilderDirector } from './form';
 
-const builderDirector = new FormBuilderDirector();
+const environment = Environment.getInstance();
 
-console.log(builderDirector.emptyForm());
-console.log(builderDirector.exampleForm());
+// const prodEnv = new ProductionEnvironment();
+// environment.setEnvironment(prodEnv);
+
+const developEnv = new DevelopEnvironment();
+environment.setEnvironment(developEnv);
+
+const formBuilder = new FormBuilder();
+const formBuilderDirector = new FormBuilderDirector();
+
+const test = formBuilderDirector.exampleForm();
+console.log(test);

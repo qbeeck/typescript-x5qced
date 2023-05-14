@@ -17,12 +17,12 @@ export class FormBuilder {
     return this;
   }
 
-  setControl(control: FormControl): FormBuilder {
+  addControl(control: FormControl): FormBuilder {
     this._form.addControl(control);
     return this;
   }
 
-  setControls(controls: FormControl[]): FormBuilder {
+  addControls(controls: FormControl[]): FormBuilder {
     controls.forEach((control) => this._form.addControl(control));
     return this;
   }
@@ -33,19 +33,19 @@ export class FormBuilder {
   }
 
   build(): Form {
-    return this._form;
+    const form = this._form;
+    this.reset();
+
+    return form;
   }
 }
 
 export class FormBuilderDirector {
   private readonly _builder = new FormBuilder();
 
-  emptyForm(): Form {
-    return this._builder.reset().build();
-  }
-
   exampleForm(): Form {
-    const section = new SectionFormControl().setTitle('Section Title Example');
+    const section = new SectionFormControl();
+
     const question1 = new QuestionFormControl().setQuestion(
       'Question #1 Example'
     );
@@ -61,9 +61,8 @@ export class FormBuilderDirector {
       'Select Date Title Example'
     );
 
-    return this._builder
-      .setTitle('Example Form Template')
-      .setControls([section, selectDate1, selectDate2])
-      .build();
+    this._builder.addControls([section, selectDate1, selectDate2]);
+
+    return this._builder.setTitle('Example Form Template').build();
   }
 }
